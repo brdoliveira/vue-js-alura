@@ -21,8 +21,7 @@ export default defineComponent({
     components: { Formulario, Tarefa, Box },
     data() {
       return {
-        tarefas: [] as ITarefa[],
-        modoEscuroAtivo: false
+        tarefas: [] as ITarefa[]
       }
     },
     computed: {
@@ -33,27 +32,8 @@ export default defineComponent({
     methods: {
       salvarTarefa(tarefa: ITarefa){
         this.tarefas.push(tarefa)
-      },
-      trocarTema(modoEscuroAtivo: boolean){
-        this.modoEscuroAtivo = modoEscuroAtivo
       }
     }
 })
 </script>
 
-<style>
-  .lista {
-    padding: 1.25rem;
-  }
-  main{
-    --bg-primario: #fff;
-    --texto-primario: #000;
-  }
-  main.modo-escuro {
-    --bg-primario: #2b2d42;
-    --texto-primario: #ddd;
-  }
-  .conteudo{
-    background-color: var(--bg-primario);
-  }
-</style>
