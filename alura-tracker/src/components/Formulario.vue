@@ -27,11 +27,10 @@
 
 <script lang="ts">
 import { computed, defineComponent } from 'vue';
-
 import Temporizador from './Temporizador.vue';
 import { useStore } from '@/store';
 import { TipoNotificacao } from '@/interfaces/INotificacao';
-import { NOTIFICAR } from '@/store/tipo-mutacoes';
+import useNotificador from '@/hooks/notificador'
 
 export default defineComponent({
     name: "Formulario",
@@ -47,11 +46,11 @@ export default defineComponent({
         finalizarTarefa(tempoDecorrido: number): void {
             const projeto = this.projetos.find((p) => p.id == this.idProjeto);
             if(!projeto) {
-                this.store.commit(NOTIFICAR, {
-                    titulo: 'Ops!',
-                    texto: "Selecione um projeto antes de finalizar a tarefa!",
-                    tipo: TipoNotificacao.FALHA,
-                });
+                this.notificar(
+                    TipoNotificacao.FALHA,
+                    'Ops!',
+                    "Selecione um projeto antes de finalizar a tarefa!"
+                );
                 return;
             }
             this.$emit('aoSalvarTarefa', {
@@ -64,8 +63,10 @@ export default defineComponent({
     },
     setup() {
         const store = useStore()
+        const { notificar } = useNotificador()
         return {
-            projetos: computed(() => store.state.projetos)
+            projetos: computed(() => store.state.projetos),
+            notificar
         }
     }
 })
