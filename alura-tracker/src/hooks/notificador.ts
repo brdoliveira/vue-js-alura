@@ -14,4 +14,8 @@ export default (): Notificador => {
             tipo: tipo
         })
     }
+
+    return {
+        notificar
+    }
 }
