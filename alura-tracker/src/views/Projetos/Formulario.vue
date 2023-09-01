@@ -7,6 +7,7 @@
                     type="text"
                     class="input"
                     v-model="nomeDoProjeto"
+                    id="nomeDoProjeto"
                 />
             </div>
             <div class="field">
