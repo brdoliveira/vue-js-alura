@@ -4,5 +4,16 @@
       "id": 1,
       "nome": "Alura Tracker"
     }
+  ],
+  "tarefas": [
+    {
+      "id": 1,
+      "descricaoEmSegundos": 60,
+      "descricao": "Configuração do ambiente",
+      "projeto": {
+        "id": 1,
+        "nome": "Alura Tracker"
+      }
+    }
   ]
 }
