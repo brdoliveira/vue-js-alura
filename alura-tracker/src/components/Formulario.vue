@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 import Temporizador from './Temporizador.vue';
 import { useStore } from '@/store';
 import { TipoNotificacao } from '@/interfaces/INotificacao';
@@ -36,37 +36,37 @@ export default defineComponent({
     name: "Formulario",
     emits: ['aoSalvarTarefa'],
     components: { Temporizador },
-    data (){
-        return {
-            descricao: '',
-            idProjeto: ''
-        }
-    },
-    methods: {
-        finalizarTarefa(tempoDecorrido: number): void {
-            const projeto = this.projetos.find((p) => p.id == this.idProjeto);
+    setup(props, { emit} ) {
+        const store = useStore()
+        const { notificar } = useNotificador()
+        const descricao = ref("")
+        const idProjeto = ref("")
+        const projetos  = computed(() => store.state.projeto.projetos)
+
+        const finalizarTarefa = (tempoDecorrido: number): void => {
+            const projeto = projetos.value.find((p) => p.id == idProjeto.value);
             if(!projeto) {
-                this.notificar(
+                notificar(
                     TipoNotificacao.FALHA,
                     'Ops!',
                     "Selecione um projeto antes de finalizar a tarefa!"
                 );
                 return;
             }
-            this.$emit('aoSalvarTarefa', {
+            emit('aoSalvarTarefa', {
                 duracaoEmSegundos: tempoDecorrido,
-                descricao: this.descricao,
+                descricao: descricao,
                 projeto: projeto
             })
-            this.descricao = ''
+            descricao.value = ''
         }
-    },
-    setup() {
-        const store = useStore()
-        const { notificar } = useNotificador()
+
         return {
-            projetos: computed(() => store.state.projeto.projetos),
-            notificar
+            descricao,
+            idProjeto,
+            projetos,
+            notificar,
+            finalizarTarefa
         }
     }
 })
