@@ -5,7 +5,6 @@ import { InjectionKey } from "vue";
 import { Store, createStore, useStore as vuexUseStore} from "vuex";
 import { NOTIFICAR } from "./tipo-mutacoes";
 import { INotificacao } from "@/interfaces/INotificacao";
-import ITarefa from "@/interfaces/ITarefa";
 
 export interface Estado {
     notificacoes: INotificacao[],
